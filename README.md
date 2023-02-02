@@ -10,7 +10,6 @@ Currently compatible\* with **DCS OpenBeta version 2.8.2.35759.**
 -   There is no visible selection box (yet).
 -   Selection for statics is slow, especially for a large number (> 20). I would not recommend it.
 -   In general, I wouldn't recommend trying to select a large amount of groups in a large mission. It tends to be very slow. Even if DCS seems "frozen," the ME is processing the selections in the background.
--   **This is basically only for selecting a large amount of units to delete them. That's all you can do with multiselection in the Mission Editor and this script doesn't change that.**
 
 ## Usage
 
