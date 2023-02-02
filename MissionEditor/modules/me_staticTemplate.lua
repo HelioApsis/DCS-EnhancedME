@@ -109,6 +109,57 @@ function save(fullFileName, name, desc)
     end
 end
 
+function saveSelection(fullFileName, name, desc)
+    unload_staticTemplate()
+	
+    -- Begin changes for selection only
+	local selectedGroups = MapWindow.getSelectedGroups()
+    for coalitionName, coalition in pairs(um.coalition) do
+		local newCountryTbl = {}
+		local countryCounter = 1
+        for k, country in pairs(coalition.country) do
+			local hasGroups = false
+			for fieldName, field in pairs(country) do
+                if (fieldName == 'static' or fieldName == 'vehicle' or fieldName == 'plane' or fieldName == 'helicopter' or fieldName == 'ship' or fieldName == 'complex') and field.group then
+                    local newGroups = {}
+                    local grCounter = 1
+					hasGroups = true
+					for kkk, group in pairs(field.group) do
+						if selectedGroups[group.groupId] then
+                            newGroups[grCounter] = group
+							grCounter = grCounter + 1
+						end
+                    end
+					if newGroups ~= {} then
+						um["coalition"][coalitionName]["country"][k][fieldName]["group"] = newGroups
+					else
+						um["coalition"][coalitionName]["country"][k][fieldName] = nil
+                    end
+                end
+            end
+			if hasGroups then
+                newCountryTbl[countryCounter] = um["coalition"][coalitionName]["country"][k]
+				countryCounter = countryCounter + 1
+			end
+        end
+		um["coalition"][coalitionName]["country"] = newCountryTbl
+	end
+	-- End changes
+	
+	um.name = name
+	um.desc = desc
+	
+	local dirName = lfs.writedir().."StaticTemplate/"
+	local a = lfs.attributes(dirName,'mode')
+	if not a then
+		lfs.mkdir(dirName)
+	end
+    
+    if fullFileName then
+        U.saveInFile(um, 'staticTemplate', fullFileName)
+    end
+end
+
 function getInfo(fullFileName)
 	local staticTemplate
 	local info = {}

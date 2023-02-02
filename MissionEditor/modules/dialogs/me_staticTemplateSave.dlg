@@ -58,6 +58,38 @@ dialog = {
 							},
 							["type"] = "Button",
 						},
+						["bCreateSelection"] = {
+							["params"] = {
+								["bounds"] = {
+									["h"] = 32,
+									["w"] = 145,
+									["x"] = 175,
+									["y"] = 10,
+								},
+								["enabled"] = true,
+								["tabOrder"] = 0,
+								["text"] = "$CreateSelection",
+								["tooltip"] = "",
+								["visible"] = true,
+								["zindex"] = 1,
+							},
+							["skin"] = {
+								["params"] = {
+									["name"] = "buttonSkinGreenNew",
+								},
+								["states"] = {
+									["disabled"] = {
+										[1] = {
+											["text"] = {
+												["fontSize"] = 13,
+												["lineHeight"] = 0,
+											},
+										},
+									},
+								},
+							},
+							["type"] = "Button",
+						},
 					},
 					["params"] = {
 						["bounds"] = {

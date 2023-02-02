@@ -36,8 +36,9 @@ cdata = {
 	Save				= _("Save"),
 	Close				= _("Close"),
 	Create				= _("Create"),
+	CreateSelection		= _("Create (Selection)"),
 	Cancel				= _("Cancel"),
-	text				= _("The current mission will be saved as a template"),
+	text				= _("The current mission/selection will be saved as a template"),
 	already				= _("Such file already exists"),
 	invalidFilenameMsg 	= _('Invalid filename!'),
 	overwriteFile		= _('File already exists on disk, do you wish to overwrite file?'),  
@@ -60,10 +61,12 @@ function create()
 	bClose			= containerMain.pUp.bClose 
 	bCancel			= containerMain.pBtn.bCancel	
 	bCreate			= containerMain.pBtn.bCreate
+	bCreateSelection= containerMain.pBtn.bCreateSelection
 
 	bClose.onChange 	= onChange_bClose
 	bCancel.onChange 	= onChange_bClose
 	bCreate.onChange  	= onChange_bCreate
+	bCreateSelection.onChange  	= onChange_bCreateSelection
 	eFileName.onChange 	= onChange_eFileName
 	
 	containerMain:setPosition((w-450)/2,(h-550)/2)
@@ -127,6 +130,25 @@ function onChange_bCreate()
 	window:setVisible(false)
 end
 
+function onChange_bCreateSelection()
+	local fullFileName = lfs.writedir() .. 'StaticTemplate/'..eFileName:getText()..'.stm'
+	
+	if FileDialogUtils.getFileExists(fullFileName) == true then
+		local handler = MsgWindow.question(cdata.overwriteFile, cdata.question, cdata.yes, cdata.no, cdata.cancel)
+		
+		function handler:onChange(button)
+            handler:hide()
+			if button == cdata.yes then                
+				staticTemplate.saveSelection(fullFileName, eName:getText(), eDesc:getText())
+			end
+		end		
+		handler:show()
+	else
+		staticTemplate.saveSelection(fullFileName, eName:getText(), eDesc:getText())
+	end
+	
+	window:setVisible(false)
+end
 
 
 
