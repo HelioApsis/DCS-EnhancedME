@@ -75,7 +75,9 @@ local TriggerZoneController		= require('Mission.TriggerZoneController')
 local ProductType 				= require('me_ProductType')
 local optionsEditor				= require('optionsEditor')
 local map_classifier 			= require('me_map_classifier')
-local MeSettings	 			= require('MeSettings')
+local MeSettings                = require('MeSettings')
+-- ADDED FOR SELECTION BOX
+local SelectBox 				= require('me_select_box')
 
 
 i18n.setup(_M)
@@ -1893,7 +1895,10 @@ end
             panel_summary.update()
             panel_route.update()
         end
-                
+        
+        -- ADDED FOR SELECTION BOX
+		SelectBox.HandleMouseUp(x, y, button, drag)
+
         selectObj()
         
     end    
@@ -2189,6 +2194,9 @@ function panState_onMouseDown(self, x, y, button)
     MOUSE_POS.handled = false
 	
     if 1 == button then
+        -- ADDED FOR SELECTION BOX
+		SelectBox.HandleMouseDown(x, y, button)
+
         handleLeftMouseDown(x,y,false)
     elseif 2 == button then		
         startRuler_(x, y)
